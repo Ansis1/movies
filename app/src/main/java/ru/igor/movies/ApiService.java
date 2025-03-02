@@ -10,12 +10,11 @@ public interface ApiService {
     String ACCEPT_TYPE = "accept: application/json";
 
     @GET("movie?limit=5&sortField=votes.kp&sortType=-1&type=movie&rating.kp=7-10")
+    // @GET("movie?limit=100&sortField=votes.kp&sortType=1&type=movie&rating.kp=4-8")
     @Headers({
             ACCEPT_TYPE,
             X_API_KEY})
     Single<MovieResponse> loadMovies(
             @Query("page") int page
     );
-
-    ;
 }
