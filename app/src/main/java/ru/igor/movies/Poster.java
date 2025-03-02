@@ -3,7 +3,9 @@ package ru.igor.movies;
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
-public class Poster {
+import java.io.Serializable;
+
+public class Poster implements Serializable {
     @SerializedName("url")
     private String url;
 

@@ -3,7 +3,9 @@ package ru.igor.movies;
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
 
     @SerializedName("id")
     private int id;
