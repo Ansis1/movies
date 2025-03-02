@@ -41,6 +41,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     @NotNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int i) {
+        Log.d(LOG_TAG, "onCreateViewHolder()" + i);
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.movie_item,
                 viewGroup,
@@ -51,6 +52,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MovieViewHolder movieViewHolder, int i) {
+        Log.d(LOG_TAG, "onBindViewHolder()" + i);
 
         Movie movie = movies.get(i);
         Log.d(LOG_TAG, movies.toString());
