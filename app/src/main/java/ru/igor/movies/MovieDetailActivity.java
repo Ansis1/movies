@@ -2,16 +2,11 @@ package ru.igor.movies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -44,7 +39,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         textViewDescription = findViewById(R.id.textViewDescription);
     }
 
-    public static Intent newIntrent(Context context, Movie movie) {
+    public static Intent newIntent(Context context, Movie movie) {
 
         Intent intent = new Intent(context, MovieDetailActivity.class);
         intent.putExtra(EXTRA_MOVIE, movie);

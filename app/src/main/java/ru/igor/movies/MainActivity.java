@@ -1,5 +1,6 @@
 package ru.igor.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReachEnd() {
                 viewmodel.loadMovies();
+            }
+        });
+        moviesAdapter.setOnMovieClickListener(new MoviesAdapter.OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie movie) {
+                Intent intent = MovieDetailActivity.newIntent(getApplication(), movie);
+                startActivity(intent);
             }
         });
     }

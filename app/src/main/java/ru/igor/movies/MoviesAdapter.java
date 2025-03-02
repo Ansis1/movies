@@ -20,6 +20,7 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
     private OnReachEndListener onReachEndListener;
+    private OnMovieClickListener onMovieClickListener;
     private static final String LOG_TAG = "LOG_MoviesAdapter";
 
     private List<Movie> movies = new ArrayList<>();
@@ -30,6 +31,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     public void setOnReachEndListener(OnReachEndListener onReachEndListener) {
         this.onReachEndListener = onReachEndListener;
+    }
+
+    public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
+        this.onMovieClickListener = onMovieClickListener;
     }
 
     public void setMovies(List<Movie> movies) {
@@ -47,7 +52,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                 viewGroup,
                 false
         );
-        return new MovieViewHolder(view);
+        final MovieViewHolder holder = new MovieViewHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int position = holder.getAdapterPosition();
+                onMovieClickListener.onMovieClick(movies.get(position));
+            }
+        });
+
+        return holder;
     }
 
     @Override
@@ -90,6 +105,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         void onReachEnd();
 
+    }
+
+    interface OnMovieClickListener {
+        void onMovieClick(Movie movie);
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
