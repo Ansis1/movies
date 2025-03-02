@@ -1,6 +1,7 @@
 package ru.igor.movies;
 
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
 public class Rating {
 
@@ -13,5 +14,13 @@ public class Rating {
 
     public String getKp() {
         return kp;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "kp='" + kp + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package ru.igor.movies;
 
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
 public class Movie {
 
@@ -49,5 +50,17 @@ public class Movie {
 
     public int getYear() {
         return year;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return String.format("Movie{ description= %s,id= %s, name= %s, year= %s, poster= %s, rating= %s}",
+                description,
+                id,
+                name,
+                year,
+                poster,
+                rating);
     }
 }
