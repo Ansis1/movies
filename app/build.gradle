@@ -42,6 +42,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version" //работа с сетью
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version" // для сериализации JSON
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version" //для работы с RxJava
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
     def room_version = "2.6.1" //DB
     implementation "androidx.room:room-rxjava3:$room_version"
