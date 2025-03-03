@@ -66,7 +66,7 @@ public class MainViewModel extends AndroidViewModel {
                         } else {
                             moviesMLD.setValue(movieResponse.getMovies());
                         }
-                        Log.d(LOG_TAG, "Loaded - " + String.valueOf(page));
+                        // Log.d(LOG_TAG, "Loaded - " + String.valueOf(page));
                         page++;
                     }
                 }, new Consumer<Throwable>() {

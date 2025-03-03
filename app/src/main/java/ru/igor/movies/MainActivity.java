@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Movie> movies) {
                 moviesAdapter.setMovies(movies);
-                Log.d(LOG_TAG, movies.toString());
+                //Log.d(LOG_TAG, movies.toString());
 
             }
         });

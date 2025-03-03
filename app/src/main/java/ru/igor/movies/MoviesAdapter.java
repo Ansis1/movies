@@ -70,7 +70,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         // Log.d(LOG_TAG, "onBindViewHolder()" + i);
 
         Movie movie = movies.get(i);
-        Log.d(LOG_TAG, movies.toString());
+        // Log.d(LOG_TAG, movies.toString());
 
         Glide.with(movieViewHolder.itemView)
                 .load(movie.getPoster().getUrl())
