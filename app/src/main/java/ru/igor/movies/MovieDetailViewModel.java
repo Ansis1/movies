@@ -13,7 +13,6 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MovieDetailViewModel extends AndroidViewModel {
@@ -31,48 +30,50 @@ public class MovieDetailViewModel extends AndroidViewModel {
     }
 
     public void loadTrailers(int id) {
-        Log.v(LOG_TAG, "init loadTrailers id= " + id);
+        Log.v(LOG_TAG, "init loadTrailers() with id=" + id);
 
-        compositeDisposable.add(
-                ApiFactory.apiService.loadTrailers(id)
-                        .subscribeOn(Schedulers.io())
-                        .doOnError(new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Throwable {
-                                Log.d(LOG_TAG, "loadTrailers - doOnError..." + throwable.toString());
+        Disposable disposable = ApiFactory.apiService.loadTrailers(id)
+                .subscribeOn(Schedulers.io())
+                .doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d(LOG_TAG, "loadTrailers - doOnError..." + throwable.toString());
 
-                            }
-                        })
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .map(new Function<TrailerResponse, List<Trailer>>() { //преобразование типа
-                            @Override
-                            public List<Trailer> apply(TrailerResponse trailerResponse) throws Throwable {
-                                Log.v(LOG_TAG, "apply map is null= " + (trailerResponse == null));
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<TrailerResponse, List<Trailer>>() { //преобразование типа
+                    @Override
+                    public List<Trailer> apply(TrailerResponse trailerResponse) throws Throwable {
+                        Log.d(LOG_TAG, "apply map is null= " + (trailerResponse == null));
 
-                                return trailerResponse.getTrailersList().getTrailers();
-                            }
-                        })
+                        return trailerResponse.getTrailersList().getTrailers();
+                    }
+                })
 
-                        .doOnSubscribe(new Consumer<Disposable>() {
-                            @Override
-                            public void accept(Disposable disposable) throws Throwable {
-                                Log.d(LOG_TAG, " loadTrailers - Starting load trailers...");
-                            }
-                        })
-                        .subscribe(new Consumer<List<Trailer>>() {
-                            @Override
-                            public void accept(List<Trailer> trailerList) {
-                                trailers.setValue(trailerList);
-                                Log.d(LOG_TAG, "loadTrailers - Success - trailers get.");
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Throwable {
+                        Log.d(LOG_TAG, " loadTrailers - Starting load trailers...");
+                    }
+                })
+                .subscribe(new Consumer<List<Trailer>>() {
+                    @Override
+                    public void accept(List<Trailer> trailerList) {
+                        trailers.setValue(trailerList);
+                        Log.d(LOG_TAG, "loadTrailers - Success - trailers get.");
 
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Throwable {
-                                Log.d(LOG_TAG, "loadTrailers - ERROR" + throwable.toString());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d(LOG_TAG, "loadTrailers - ERROR" + throwable.toString());
 
-                            }
-                        }));
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+
     }
 
     @Override
