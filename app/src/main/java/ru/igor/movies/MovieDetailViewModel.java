@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MovieDetailViewModel extends AndroidViewModel {
 
-    private static final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String LOG_TAG = "MovieDetailViewModel";
     private MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
 
