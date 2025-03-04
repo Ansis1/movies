@@ -18,7 +18,7 @@ public interface ApiService {
             @Query("page") int page
     );
 
-    @GET("movide/{id}")
+    @GET("movie/{id}")
     @Headers({
             ACCEPT_TYPE,
             X_API_KEY})
