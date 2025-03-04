@@ -25,4 +25,13 @@ public interface ApiService {
     Single<TrailerResponse> loadTrailers(
             @Path("id") int film
     );
+
+    @GET("review?limit=10&selectFields=id&selectFields=review&selectFields=author&selectFields=type")
+    @Headers({
+            ACCEPT_TYPE,
+            X_API_KEY})
+    Single<ReviewResponse> loadReviews(
+            @Query("movieId") int film
+            //  @Query("page") int page
+    );
 }
