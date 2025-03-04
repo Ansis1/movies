@@ -20,6 +20,12 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private static final String LOG_TAG = "MovieDetailViewModel";
     private MutableLiveData<List<Trailer>> trailers = new MutableLiveData<>();
+    private MutableLiveData<List<Review>> reviews = new MutableLiveData<>();
+
+
+    public LiveData<List<Review>> getReviews() {
+        return reviews;
+    }
 
     public LiveData<List<Trailer>> getTrailers() {
         return trailers;
@@ -28,6 +34,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
     public MovieDetailViewModel(@NotNull Application application) {
         super(application);
     }
+
 
     public void loadTrailers(int id) {
         Log.v(LOG_TAG, "init loadTrailers() with id=" + id);
@@ -76,6 +83,41 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     }
 
+    public void loadReviews(int film) {
+        Disposable disposable = ApiFactory.apiService.loadReviews(film)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<ReviewResponse, List<Review>>() { //преобразование типа
+                    @Override
+                    public List<Review> apply(ReviewResponse reviewResponse) throws Throwable {
+                        return reviewResponse.getReviews();
+                    }
+                })
+
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Throwable {
+                        Log.d(LOG_TAG, " loadReviews - Starting load trailers...");
+                    }
+                })
+                .subscribe(new Consumer<List<Review>>() {
+                    @Override
+                    public void accept(List<Review> reviewList) {
+                        reviews.setValue(reviewList);
+                        Log.d(LOG_TAG, "loadReviews - Success - trailers get.");
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+                        Log.d(LOG_TAG, "loadReviews - ERROR" + throwable.toString());
+
+                    }
+                });
+
+        compositeDisposable.add(disposable);
+
+    }
     @Override
     protected void onCleared() {
         super.onCleared();
