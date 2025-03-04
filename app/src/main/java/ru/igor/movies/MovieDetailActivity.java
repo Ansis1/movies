@@ -2,6 +2,7 @@ package ru.igor.movies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -32,18 +33,25 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         viewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
+
         initViews();
+
         trailerAdapter = new TrailerAdapter();
         recyclerViewTrailers.setAdapter(trailerAdapter);
+
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
+
         Glide.with(this)
                 .load(movie.getPoster().getUrl())
                 .error(getDrawable(R.drawable.ic_launcher_foreground))
                 .into(imageviewPoster);
+
         textViewTitle.setText(movie.getName());
         textViewYear.setText(String.valueOf(movie.getYear()));
         textViewDescription.setText(movie.getDescription());
+
         viewModel.loadTrailers(movie.getId());
+
         viewModel.getTrailers().observe(this, new Observer<List<Trailer>>() {
             @Override
             public void onChanged(List<Trailer> trailers) {
@@ -53,8 +61,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
         trailerAdapter.setOnTrailerClickListener(new TrailerAdapter.OnTrailerClickListener() {
             @Override
-            public void onTrailerClick(String url) {
+            public void onTrailerClick(Trailer trailer) {
 
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(trailer.getUrl()));
+                startActivity(intent);
             }
         });
     }
