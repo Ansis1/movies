@@ -33,7 +33,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
     public MovieDetailViewModel(@NotNull Application application) {
         super(application);
-        movieDao = MovieDatabase.getInstance(application).movieDao();
+        movieDao = MovieDatabase.getInstance(application).movieDao(); //LiveData будет выполнена в фоне.
     }
 
     public LiveData<Movie> getFavouriteMovie(int movieId) {
