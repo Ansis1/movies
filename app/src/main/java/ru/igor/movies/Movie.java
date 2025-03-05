@@ -1,12 +1,19 @@
 package ru.igor.movies;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-public class Movie implements Serializable {
+import static ru.igor.movies.Movie.TABLE_NAME;
 
+
+@Entity(tableName = TABLE_NAME)
+public class Movie implements Serializable {
+    @PrimaryKey
     @SerializedName("id")
     private int id;
     @SerializedName("name")
@@ -16,10 +23,13 @@ public class Movie implements Serializable {
     @SerializedName("year")
     private int year;
     @SerializedName("poster")
+    @Embedded
     private Poster poster;
     @SerializedName("rating")
+    @Embedded
     private Rating rating;
 
+    public static final String TABLE_NAME = "favourite_movies";
     public Movie(int id, String name, String description, int year, Poster poster, Rating rating) {
         this.name = name;
         this.rating = rating;
